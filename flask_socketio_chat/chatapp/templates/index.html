@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask-SocketIO Example</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;500&display=swap" rel="stylesheet">
+    <title>Chaty</title>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
     <style>
  body {
@@ -13,6 +16,7 @@
   align-items: center;
   height: 100vh;
   background: linear-gradient(to bottom right, #4b0082, #800080);
+  background: linear-gradient(135deg, hsla(232, 31%, 24%, 1) 0%, hsla(261, 25%, 60%, 1) 100%);
   font-family: 'Poppins', sans-serif;
 }
 #label {
@@ -43,6 +47,7 @@
   font-size: 16px;
   outline: none;
   border: none;
+  margin-bottom: 10px;
 }
 
 ul {
@@ -117,6 +122,32 @@ li {
   font-family: 'Quicksand', sans-serif;
 }
 
+input#message{
+  font-family: 'Roboto Medium', sans-serif;
+  }
+
+input#image{
+  display: none;
+  }
+
+input#image + label{
+   background-image: linear-gradient(92.88deg, #455EB5 9.16%, #5643CC 43.89%, #673FD7 64.72%);
+  padding: 10px;
+  color: #fff;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  margin-left: 8px;
+  font-family: 'Roboto Medium', sans-serif;
+  transition: all 235ms ease-in-out;
+  }
+
+input#image + label:hover{
+  box-shadow: rgba(80, 63, 205, 0.5) 0 1px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  }
+
+
 
     </style>
 <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
@@ -135,7 +166,10 @@ li {
 
         <ul id="chat-messages">
         </ul>
-        <input type="text" id="message" placeholder="Enter a Message">
+        <input type="text" id="message" placeholder="Enter Your Message">
+        <input type="file" id="image" accept="image/*">
+        <label for="image">Upload Image</label>
+
     </div>
     <script>
         const socket = io({autoConnect: false});
@@ -161,12 +195,35 @@ li {
             }
         })
 
+        let imageInput = document.getElementById('image')
+
+        imageInput.addEventListener('change',(e)=>{
+            let file = imageInput.files[0]
+            let reader = new FileReader()
+            reader.addEventListener('load', ()=>{
+                socket.emit('image', reader.result)
+            })
+            reader.readAsDataURL(file)
+        })
+
+
         socket.on("chat", function(data) {
             let ul = document.getElementById("chat-messages");
             let li = document.createElement("li");
             li.appendChild(document.createTextNode(data["username"] + ": " + data["message"]));
             ul.appendChild(li);
             ul.scrolltop = ul.scrollHeight;
+        })
+
+
+        socket.on('image',(image_data) =>{
+            let li = document.createElement("li");
+            let img = document.createElement("img");
+            img.src = image_data
+            img.height = 100
+            img.style.borderRadius = "5%"
+            li.appendChild(img)
+            document.getElementById('chat-messages').appendChild(li);
         })
     </script>
 </body>

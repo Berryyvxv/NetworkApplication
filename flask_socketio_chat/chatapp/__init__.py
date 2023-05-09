@@ -1,7 +1,8 @@
-from flask import Flask 
+from flask import Flask
 
 from .events import socketio
-from .routes import main 
+from .routes import main
+
 
 def create_app():
     app = Flask(__name__)
