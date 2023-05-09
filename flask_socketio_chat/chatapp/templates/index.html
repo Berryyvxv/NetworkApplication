@@ -7,45 +7,128 @@
     <title>Flask-SocketIO Example</title>
     <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #e5e5e5;
-        }
+ body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(to bottom right, #4b0082, #800080);
+  font-family: 'Poppins', sans-serif;
+}
+#label {
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			font-family: 'Pacifico', cursive;
+			font-size: 50px;
+			color: #fff;
+			font-family: 'Lobster', cursive;
+            font-size: 3rem;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+		}
 
-        #chat {
-            width: 50%;
-        }
+#chat {
+  width: 50%;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+}
 
-        #chat input {
-            width: 99%;
-        }
+#chat input {
+  width: 99%;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+}
 
-        ul {
-            height: 500px;
-            background-color: white;
-            overflow-y: scroll;
-        }
+ul {
+  height: 500px;
+  background-color: white;
+  border-radius: 10px;
+  overflow-y: scroll;
+  margin: 0;
+  padding: 10px;
+}
 
-        li {
-            list-style: none;
-        }
+li {
+  list-style: none;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
 
-        #landing {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            gap: 10px;
-        }
+#landing {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#join-btn {
+  border-radius: 30px;
+  padding: 10px 20px;
+  background-color: white;
+  color: #4b0082;
+  font-size: 16px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+}
+#join-btn i {
+  float: right;
+  margin-left: 5px;
+}
+
+#join-btn::after {
+  content: url('https://cdn4.iconfinder.com/data/icons/basic-ui-elements/700/01_arrow-512.png');
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  height: 16px;
+  width: 16px;
+}
+
+#join-btn:hover {
+  background-color: #f0f0f0;
+}
+#username-input {
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 16px;
+  outline: none;
+  border: none;
+}
+#join-btn, #username {
+  border-radius: 20px;
+}
+#super-gurls {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  color: white;
+  font-size: 24px;
+  font-family: 'Quicksand', sans-serif;
+}
+
+
     </style>
+<link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="landing">
-        <input type="text" id="username" placeholder="Username">
-        <button id="join-btn">JOIN</button>
+<div id="label">Chat Application</div>
+<div id="landing">
+  <input type="text" id="username" placeholder="Username" style="font-family: Poppins, sans-serif; border-radius: 10px; padding: 10px; outline: none; border: none;">
+        <button id="join-btn" style="font-family: Poppins, sans-serif;">
+  Join Chat
+  <i class="fas fa-chevron-right"></i>
+</button>
     </div>
 
     <div id="chat" style="display:none;">
@@ -88,3 +171,5 @@
     </script>
 </body>
 </html>
+
+
