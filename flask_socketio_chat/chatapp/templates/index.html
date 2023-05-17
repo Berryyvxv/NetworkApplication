@@ -174,18 +174,31 @@ input#image + label:hover{
     <script>
         const socket = io({autoConnect: false});
 
+        //taking the value of the input username and send it back to the user_join function
+
         document.getElementById("join-btn").addEventListener("click", function() {
             let username = document.getElementById("username").value;
 
+            //connecting the socket client to the server
+
             socket.connect();
+
+            /*Adding event listener to the client socket
+             to listen to the "connect" event and call the
+             associated function from the server side*/
 
             socket.on("connect", function() {
                 socket.emit("user_join", username);
             })
 
+            //Display & Hide HTML elements whenever a client joins
+
             document.getElementById("chat").style.display = "block";
             document.getElementById("landing").style.display = "none";
         })
+
+
+        //Adding event listener so when a client press "Enter" the message is displayed
 
         document.getElementById("message").addEventListener("keyup", function (event) {
             if (event.key == "Enter") {
@@ -197,6 +210,9 @@ input#image + label:hover{
 
         let imageInput = document.getElementById('image')
 
+        /*Adding event listener so when a client upload an image
+         it is placed into the ImageInput element*/
+
         imageInput.addEventListener('change',(e)=>{
             let file = imageInput.files[0]
             let reader = new FileReader()
@@ -206,6 +222,8 @@ input#image + label:hover{
             reader.readAsDataURL(file)
         })
 
+        /*Adding the data to the HTML elements whenever
+        the server response to the chat\image events*/
 
         socket.on("chat", function(data) {
             let ul = document.getElementById("chat-messages");
